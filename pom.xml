@@ -88,4 +88,8 @@
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+    <scm>
+        <connection>scm:git:git@code.samourai.io:whirlpool/boltzmann-java.git</connection>
+        <tag>HEAD</tag>
+    </scm>
 </project>
