@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/io.samourai.code.whirlpool/boltzmann-java.svg)](https://jitpack.io/#io.samourai.code.whirlpool/boltzmann-java)
+[![](https://jitpack.io/v/io.samourai.code.wallet/boltzmann-java.svg)](https://jitpack.io/#io.samourai.code.wallet/boltzmann-java)
 
 # Boltzmann-Java
 
