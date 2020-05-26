@@ -61,9 +61,16 @@ public class Utils {
 
   public static void logProgressDone(String progressId, long target, String msg) {
     Progress progress = progressLast.remove(progressId);
-    progressResult.add(progress);
+    if (progress != null) {
+      progressResult.add(progress);
+    }
     if (log.isDebugEnabled()) {
-      String str = progress.done(target, msg);
+      String str;
+      if (progress != null) {
+        str = progress.done(target, msg);
+      } else {
+        str = "[" + progressId + "] (no iteration) " + msg;
+      }
       logMemory(str);
     }
   }
