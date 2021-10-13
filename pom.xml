@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.samourai.code.wallet</groupId>
     <artifactId>boltzmann-java</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <name>boltzmann-java</name>
     <packaging>jar</packaging>
     <properties>
@@ -110,6 +110,6 @@
     </repositories>
     <scm>
         <connection>scm:git:git@code.samourai.io:wallet/boltzmann-java.git</connection>
-        <tag>1.0.1</tag>
+        <tag>1.0.2</tag>
     </scm>
 </project>
