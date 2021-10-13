@@ -25,9 +25,7 @@ public class BoltzmannResult extends TxProcessorResult {
         r.getNbCmbnPrfctCj(),
         r.getNbTxosPrfctCj());
     this.dtrmLnks =
-        r.getDtrmLnksById() != null
-            ? replaceDtrmLinks(r.getDtrmLnksById(), r.getTxos())
-            : new String[][] {};
+        r.getDtrmLnksById() != null ? replaceDtrmLinks(r.getDtrmLnksById(), r.getTxos()) : null;
     this.duration = duration;
   }
 
@@ -50,6 +48,10 @@ public class BoltzmannResult extends TxProcessorResult {
 
   public String[][] getDtrmLnks() {
     return dtrmLnks;
+  }
+
+  public long getDuration() {
+    return duration;
   }
 
   public void print() {
@@ -111,7 +113,9 @@ public class BoltzmannResult extends TxProcessorResult {
       }
     }
 
-    if (getDtrmLnks().length > 0) {
+    if (getDtrmLnks() == null) {
+      System.out.println("Deterministic links: all");
+    } else if (getDtrmLnks().length > 0) {
       System.out.println("Deterministic links:");
       String[][] readableDtrmLnks = getDtrmLnks();
       for (String[] dtrmLink : readableDtrmLnks) {
@@ -151,7 +155,11 @@ public class BoltzmannResult extends TxProcessorResult {
       export.put("ins", getTxos().getInputs());
       export.put("outs", getTxos().getOutputs());
       export.put("nbCmbn", getNbCmbn());
-      export.put("mat", getMatLnkCombinations().toString());
+      export.put(
+          "mat",
+          getMatLnkCombinations() != null
+              ? getMatLnkCombinations().toString()
+              : null); // null => entropy=0 & matrix full of 1
       export.put("benchmarks", benchmarks);
 
       String exportStr = new ObjectMapper().writeValueAsString(export);

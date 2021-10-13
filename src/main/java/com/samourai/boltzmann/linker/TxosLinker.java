@@ -428,4 +428,17 @@ public class TxosLinker {
     }
     return true;
   }
+
+  public static TxosLinkerResult zeroEntropyResult(Txos filteredTxos) {
+    // When entropy = 0, all inputs and outputs are linked and matrix is filled with 1.
+    int nbOuts = filteredTxos.getOutputs().size();
+    int nbIns = filteredTxos.getInputs().size();
+    ObjectBigList<IntBigList> matLnk = ListsUtils.newIntMatrix(nbOuts, nbIns, 1);
+    TxosAggregator aggregator = new TxosAggregator();
+    Set<long[]> dtrmLinks = aggregator.findDtrmLinks(matLnk, 1);
+    TxosLinkerResult result =
+        new TxosLinkerResult(
+            1, matLnk, dtrmLinks, new Txos(filteredTxos.getInputs(), filteredTxos.getOutputs()));
+    return result;
+  }
 }

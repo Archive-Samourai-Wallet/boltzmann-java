@@ -73,16 +73,12 @@ public class TxProcessor {
     TxosLinkerResult result;
 
     // Processes the transaction
+    Txos filteredTxos = new Txos(filteredIns.getTxos(), filteredOuts.getTxos());
     if (filteredIns.getTxos().size() <= 1 || filteredOuts.getTxos().size() == 1) {
       // Txs having no input (coinbase) or only 1 input/output (null entropy)
-      // When entropy = 0, all inputs and outputs are linked and matrix is filled with 1.
-      // No need to build this matrix. Every caller should be able to manage that.
-      result =
-          new TxosLinkerResult(
-              1, null, null, new Txos(filteredIns.getTxos(), filteredOuts.getTxos()));
+      result = TxosLinker.zeroEntropyResult(filteredTxos);
     } else {
       // Initializes the TxosLinker for this tx
-      Txos filteredTxos = new Txos(filteredIns.getTxos(), filteredOuts.getTxos());
       TxosLinker linker = new TxosLinker(fees, maxDuration, maxTxos);
 
       // Computes a list of sets of inputs controlled by a same address

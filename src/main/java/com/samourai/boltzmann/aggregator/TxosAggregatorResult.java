@@ -31,6 +31,11 @@ public class TxosAggregatorResult {
   }
 
   public ObjectBigList<DoubleBigList> computeMatLnkProbabilities() {
+    if (matLnkCombinations == null) {
+      // entropy=0 => matrix full of 1 probabilities, ie
+      // a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d
+      return null;
+    }
     ObjectBigList<DoubleBigList> matLnkProbabilities =
         new ObjectBigArrayBigList<DoubleBigList>(matLnkCombinations.size64());
     if (nbCmbn > 0) {
