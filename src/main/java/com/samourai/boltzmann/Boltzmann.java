@@ -8,7 +8,7 @@ import com.samourai.boltzmann.linker.TxosLinkerOptionEnum;
 import com.samourai.boltzmann.processor.TxProcessor;
 import com.samourai.boltzmann.processor.TxProcessorResult;
 import com.samourai.boltzmann.utils.ListsUtils;
-import java8.util.stream.LongStreams;
+import java.util.Arrays;
 
 public class Boltzmann {
   private BoltzmannSettings settings;
@@ -36,8 +36,8 @@ public class Boltzmann {
       Txos txos, float maxCjIntrafeesRatio, TxosLinkerOptionEnum... linkerOptions) {
     long t1 = System.currentTimeMillis();
 
-    long sumInputs = LongStreams.of(ListsUtils.toPrimitiveArray(txos.getInputs().values())).sum();
-    long sumOutputs = LongStreams.of(ListsUtils.toPrimitiveArray(txos.getOutputs().values())).sum();
+    long sumInputs = Arrays.stream(ListsUtils.toPrimitiveArray(txos.getInputs().values())).sum();
+    long sumOutputs = Arrays.stream(ListsUtils.toPrimitiveArray(txos.getOutputs().values())).sum();
     long fees = sumInputs - sumOutputs;
     System.out.println("fees = " + fees);
 

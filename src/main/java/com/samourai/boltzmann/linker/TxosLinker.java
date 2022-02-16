@@ -11,10 +11,6 @@ import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectBigList;
 import java.util.*;
 import java.util.Map.Entry;
-import java8.util.function.Consumer;
-import java8.util.function.LongUnaryOperator;
-import java8.util.stream.LongStreams;
-import java8.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,15 +118,10 @@ public class TxosLinker {
       if (!dtrmLnks.isEmpty()) {
         final ObjectBigList<IntBigList> matLnkFinal = matLnk;
 
-        StreamSupport.stream(dtrmLnks)
+        dtrmLnks
+            .stream()
             .parallel()
-            .forEach(
-                new Consumer<long[]>() {
-                  @Override
-                  public void accept(long[] dtrmLnk) {
-                    matLnkFinal.get(dtrmLnk[0]).set(dtrmLnk[1], 1);
-                  }
-                });
+            .forEach(dtrmLnk -> matLnkFinal.get(dtrmLnk[0]).set(dtrmLnk[1], 1));
       }
     }
 
@@ -401,13 +392,10 @@ public class TxosLinker {
     final String PROGRESS_ID = "prepareTxos";
     for (long[] array : allAggIndexes) {
       allAggVal.add(
-          LongStreams.of(array)
+          Arrays.stream(array)
               .map(
-                  new LongUnaryOperator() {
-                    @Override
-                    public long applyAsLong(long indice) {
-                      return allVal[(int) indice]; // TODO !!! cast
-                    }
+                  indice -> {
+                    return allVal[(int) indice]; // TODO !!! cast
                   })
               .sum());
 

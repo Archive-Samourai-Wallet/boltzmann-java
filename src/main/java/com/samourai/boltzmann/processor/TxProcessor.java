@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java8.util.stream.LongStreams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,9 +61,9 @@ public class TxProcessor {
 
     // Computes total input & output amounts + fees
     long sumInputs =
-        LongStreams.of(ListsUtils.toPrimitiveArray(filteredIns.getTxos().values())).sum();
+        Arrays.stream(ListsUtils.toPrimitiveArray(filteredIns.getTxos().values())).sum();
     long sumOutputs =
-        LongStreams.of(ListsUtils.toPrimitiveArray(filteredOuts.getTxos().values())).sum();
+        Arrays.stream(ListsUtils.toPrimitiveArray(filteredOuts.getTxos().values())).sum();
     long fees = sumInputs - sumOutputs;
 
     // Sets default intrafees paid by participants (fee_received_by_maker, fees_paid_by_taker)

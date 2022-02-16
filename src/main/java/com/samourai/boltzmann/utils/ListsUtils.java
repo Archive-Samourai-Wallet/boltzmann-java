@@ -9,8 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectBigList;
 import java.util.*;
 import java.util.Map.Entry;
-import java8.util.function.LongConsumer;
-import java8.util.stream.LongStreams;
+import java.util.stream.LongStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,15 +137,12 @@ public class ListsUtils {
   public static ObjectBigList<IntBigList> clone(final ObjectBigList<IntBigList> copy) {
     final ObjectBigArrayBigList<IntBigList> c = new ObjectBigArrayBigList(copy.size64());
 
-    LongStreams.range(0, copy.size64())
+    LongStream.range(0, copy.size64())
         .parallel()
         .forEachOrdered(
-            new LongConsumer() {
-              @Override
-              public void accept(long i) {
-                IntBigList copyLine = ((IntBigArrayBigList) copy.get(i)).clone();
-                c.add(copyLine);
-              }
+            i -> {
+              IntBigList copyLine = ((IntBigArrayBigList) copy.get(i)).clone();
+              c.add(copyLine);
             });
     return c;
   }
