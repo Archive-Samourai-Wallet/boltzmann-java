@@ -44,14 +44,14 @@ public class OxtFetch {
     JsonNode inputs = dataObj.withArray("ins");
     for (JsonNode input : inputs) {
       String amount = input.get("amount").asText();
-      long value = (long) (Double.valueOf(amount) * 1e8);
+      long value = Long.valueOf(amount);
       ins0.put(input.withArray("addresses").get(0).get("value").asText(), value);
     }
 
     JsonNode outputs = dataObj.withArray("outs");
     for (JsonNode output : outputs) {
       String amount = output.get("amount").asText();
-      long value = (long) (Double.valueOf(amount) * 1e8);
+      long value = Long.valueOf(amount);
       outs0.put(output.withArray("addresses").get(0).get("value").asText(), value);
     }
 
